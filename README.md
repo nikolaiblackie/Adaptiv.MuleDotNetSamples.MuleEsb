@@ -1,6 +1,8 @@
 Adaptiv.MuleDotNetSamples.MuleEsb
 =================================
-The following Mule AnyPoint project is an APIKit based sample that demonstrates MuleESB dotNet & MSMQ connector features.
+The following Mule AnyPoint project is an APIKit based sample that demonstrates MuleESB dotNet & MSMQ connector features. 
+
+API overview published to http://api-portal.anypoint.mulesoft.com/adaptiv-integration/api/adaptiv-integration-complex-dotnet-sample/
 
 The project references classes from https://github.com/nikolaiblackie/Adaptiv.MuleDotNetSamples.DotNet which are precompiled and stored in / src / main / resources /
 
