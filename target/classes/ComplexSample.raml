@@ -1,0 +1,35 @@
+#%RAML 0.8
+---
+title: Adaptiv Integration Complex DotNet Sample
+version: 1.0
+baseUri: http://localhost:8080/api
+/SampleComplex:
+  displayName: A complex sample
+  post:
+    description: A complex sample demonstrating complex message body params
+    body:
+      application/json:
+        example: "{ 'Email': 'james@example.com', 'Active': true }"
+    responses:
+      200:
+        body:
+          application/json:
+            example: "{ 'Name': 'MULED UP', 'Email': 'james@example.com' }"     
+/SampleBREComplex:
+  displayName: Sample BRE Complex
+  post:
+    description: A sample demonstrating calling bre sample
+    body:
+      text/xml:
+        example: "<ns0:Request xmlns:ns0='http://AdaptivIntegration.BizTalkSample.SampleSchema'><A>10</A><PlusB>10</PlusB><Equals>0</Equals></ns0:Request>"
+    responses:
+      200:
+        body:
+          text/xml:
+/SampleMSMQComplex:
+  displayName: Sample MSMQ Complex
+  post:
+    description: A sample demonstrating sending to an MSMQ queue
+    body:
+      text/xml:
+        example: "<ns0:Request xmlns:ns0='http://AdaptivIntegration.BizTalkSample.SampleSchema'><A>10</A><PlusB>10</PlusB><Equals>0</Equals></ns0:Request>"       

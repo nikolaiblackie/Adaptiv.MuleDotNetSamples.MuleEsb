@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:msmq="http://www.mulesoft.org/schema/mule/msmq" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dotnet="http://www.mulesoft.org/schema/mule/dotnet" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/dotnet http://www.mulesoft.org/schema/mule/dotnet/current/mule-dotnet.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/msmq http://www.mulesoft.org/schema/mule/msmq/current/mule-msmq.xsd" version="EE-3.5.0">
+    <apikit:config name="ComplexSample-config" raml="ComplexSample.raml" consoleEnabled="true" consolePath="console" doc:name="Router" />
+    <apikit:mapping-exception-strategy name="ComplexSample-apiKitGlobalExceptionMapping" doc:name="Mapping Exception Strategy">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property" />
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload" />
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+    <dotnet:config name="DotNet_Connector" assemblyType="AdaptivIntegration.SampleMule.SampleComplex, AdaptivIntegration.SampleMule" assemblyPath="C:\Users\Administrator\Documents\Visual Studio 2013\Projects\SampleMule\SampleMule\bin\Debug\AdaptivIntegration.SampleMule.dll" scope="Transient" doc:name="DotNet Connector" />
+    <dotnet:config name="DotNet_Connector_BRE" assemblyType="AdaptivIntegration.SampleBRE.SampleBreCall, AdaptivIntegration.SampleBRE" assemblyPath="C:\Users\Administrator\Documents\Visual Studio 2013\Projects\SampleMule\SampleBRE\bin\Debug\AdaptivIntegration.SampleBRE.dll" scope="Transient" doc:name="DotNet Connector" />
+    <msmq:config name="MSMQ" serviceAddress="localhost:9000" accessToken="jXwF7YJGVm6D0/MbUbPHat483iM=" rootQueueName=".\private$\msmq-demo" ignoreSSLWarnings="true" doc:name="MSMQ">
+        <msmq:connection-pooling-profile initialisationPolicy="INITIALISE_ONE" exhaustedAction="WHEN_EXHAUSTED_GROW"/>
+    </msmq:config>
+    <flow name="ComplexSample-main" doc:name="ComplexSample-main">
+        <http:inbound-endpoint address="http://localhost:8081/api" doc:name="HTTP" />
+        <apikit:router config-ref="ComplexSample-config" doc:name="APIkit Router" />
+        <exception-strategy ref="ComplexSample-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy" />
+    </flow>
+    <flow name="post:/SampleComplex:ComplexSample-config" doc:name="post:/SampleComplex:ComplexSample-config">
+        <object-to-string-transformer doc:name="Object to String" />
+        <dotnet:execute config-ref="DotNet_Connector" methodName="ExecuteComplex" doc:name="DotNet Connector" />
+    </flow>
+    <flow name="post:/SampleBREComplex:ComplexSample-config" doc:name="post:/SampleBREComplex:ComplexSample-config">
+        <object-to-string-transformer doc:name="Object to String" />
+        <set-property propertyName="#[&quot;Content-Type&quot;]" value="#[&quot;text/xml&quot;]" doc:name="Property" />
+        <dotnet:execute config-ref="DotNet_Connector_BRE" methodName="RunHardCodePolicy" doc:name="DotNet Connector" />
+    </flow>
+    <flow name="post:/SampleMSMQComplex:ComplexSample-config" doc:name="post:/SampleMSMQComplex:ComplexSample-config">
+        <msmq:send config-ref="MSMQ" queueName=".\private$\msmq-demo" doc:name="MSMQ"/>
+
+    </flow>
+</mule>
