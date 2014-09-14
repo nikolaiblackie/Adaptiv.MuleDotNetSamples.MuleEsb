@@ -10,4 +10,5 @@
     <muleExtension name="APIkit" qualifier="org.mule.tooling.apikit"/>
     <muleExtension name="APIkit" qualifier="org.mule.tooling.apikit"/>
     <muleExtension name="MSMQ" qualifier="org.mule.tooling.ui.contribution.msmq"/>
+    <muleExtension name="APIkit" qualifier="org.mule.tooling.apikit"/>
 </mule-project>

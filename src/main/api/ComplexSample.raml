@@ -3,6 +3,18 @@
 title: Adaptiv Integration Complex DotNet Sample
 version: 1.0
 baseUri: http://localhost:8080/api
+/SampleSimple:
+  displayName: A complex sample
+  post:
+    description: A complex sample demonstrating complex message body params
+    body:
+      application/json:
+        example: "{'name':'Bob','age':32}"
+    responses:
+      200:
+        body:
+          application/json:
+            example: "{'Name':'MULED UP Bob','Age':10}" 
 /SampleComplex:
   displayName: A complex sample
   post:
