@@ -6,6 +6,16 @@ The project references classes from https://github.com/nikolaiblackie/Adaptiv.Mu
 
 Samples part of Auckland Code Camp 2014 presentation demonstrations  http://www.slideshare.net/nikolaiadaptiv/mule-anypoint-platform-dot-net-alice-in-a-java-integration-wonderland
 
+References used to build samples:
+* Dotnet Connector
+  * http://www.mulesoft.org/documentation/display/current/DotNet+Connector 
+* MSMQ Connector
+ * http://www.mulesoft.org/documentation/display/current/MSMQ+Connector 
+* Mule Blogs
+ * http://blogs.mulesoft.org/solutions-for-microsoft/ 
+ * http://blogs.mulesoft.org/integrating-mule-esb-net-based-rules-engines/ 
+
+
 Highlights of sample:
 
 * \src\main\api\ComplexSample.raml - sample RAML that outlines resources and verbs for exposing sample functions
