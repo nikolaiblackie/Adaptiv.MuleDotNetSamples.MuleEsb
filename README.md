@@ -4,6 +4,8 @@ The following Mule AnyPoint project is an APIKit based sample that demonstrates 
 
 The project references classes from https://github.com/nikolaiblackie/Adaptiv.MuleDotNetSamples.DotNet which are precompiled and stored in / src / main / resources /
 
+Samples part of Auckland Code Camp 2014 presentation demonstrations  http://www.slideshare.net/nikolaiadaptiv/mule-anypoint-platform-dot-net-alice-in-a-java-integration-wonderland
+
 Highlights of sample:
 
 * \src\main\api\ComplexSample.raml - sample RAML that outlines resources and verbs for exposing sample functions
